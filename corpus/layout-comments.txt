@@ -1,0 +1,19 @@
+==================
+Layout and comments
+==================
+(* block comment *)
+rule = "a" ; // line comment
+---
+(source_file
+  (comment)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (comment))

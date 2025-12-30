@@ -1,0 +1,53 @@
+==================
+Alternatives and separators
+==================
+identifier ::= "a" | "b" / "c" ;
+---
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+==================
+Comma-separated terms
+==================
+pair = first, second, third ;
+---
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (meta_identifier))))
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (meta_identifier))))
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (meta_identifier))))))
+    (terminator_symbol)))

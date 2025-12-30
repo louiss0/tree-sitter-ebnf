@@ -1,0 +1,59 @@
+==================
+Optional, repeated, grouped
+==================
+sequence = [ "a" ], { "b" }, ( "c" ) ;
+---
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (optional_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (repeated_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+==================
+Empty sequence
+==================
+empty = ;
+---
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (empty_sequence))))))
+    (terminator_symbol)))

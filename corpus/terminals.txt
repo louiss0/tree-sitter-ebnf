@@ -1,0 +1,46 @@
+==================
+Terminal strings and specials
+==================
+terminals = 'single', "double", ?special? ;
+---
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (special_sequence))))))
+    (terminator_symbol)))
+
+==================
+Repetition and exception
+==================
+repeat = 3 * "a" - "b" ;
+---
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (integer)
+            (syntactic_primary
+              (terminal_string)))
+          (syntactic_exception
+            (syntactic_factor
+              (syntactic_primary
+                (terminal_string)))))))
+    (terminator_symbol)))
