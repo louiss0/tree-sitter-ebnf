@@ -1,0 +1,20 @@
+==================
+Heading with rule
+==================
+# Grammar Overview
+rule = "a" ;
+---
+(source_file
+  (heading
+    (heading_marks)
+    (heading_text))
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
