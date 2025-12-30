@@ -1,0 +1,209 @@
+(*
+    Extended EBNF for describing EBNF with:
+
+      • Normal EBNF constructs (ISO-ish)
+      • Optional Markdown-style headings as top-level items
+      • Block and line comments as layout
+
+    This grammar describes the syntax of an EBNF file, not the language
+    that EBNF itself specifies.
+*)
+
+grammar
+    = { layout, top_level_item, layout } ;
+
+
+(* ---------- Top-level items ---------- *)
+
+top_level_item
+    = heading
+    | syntax_rule ;
+
+
+(* ---------- Markdown-style headings (optional) ---------- *)
+
+heading
+    = heading_marks, space, heading_text, line_ending ;
+
+heading_marks
+    = "#"
+    | "##"
+    | "###"
+    | "####"
+    | "#####"
+    | "######" ;
+
+heading_text
+    = { heading_char } ;
+
+heading_char
+    = ? any character except line_ending ? ;
+
+
+(* ---------- EBNF rules ---------- *)
+
+syntax_rule
+    = meta_identifier, layout, defining_symbol, layout,
+      definitions_list, layout, terminator_symbol ;
+
+
+defining_symbol
+    = "="
+    | "::=" ;
+
+
+terminator_symbol
+    = ";"
+    | "." ;
+
+
+definitions_list
+    = single_definition,
+      { layout, definition_separator, layout, single_definition } ;
+
+
+definition_separator
+    = "|"
+    | "/" ;
+
+
+single_definition
+    = syntactic_term,
+      { layout, ",", layout, syntactic_term } ;
+
+
+syntactic_term
+    = syntactic_factor,
+      [ layout, "-", layout, syntactic_exception ] ;
+
+
+syntactic_exception
+    = syntactic_factor ;
+
+
+syntactic_factor
+    = [ integer, layout, "*", layout ], syntactic_primary ;
+
+
+syntactic_primary
+    = optional_sequence
+    | repeated_sequence
+    | grouped_sequence
+    | meta_identifier
+    | terminal_string
+    | special_sequence
+    | empty_sequence ;
+
+
+optional_sequence
+    = "[", layout, definitions_list, layout, "]" ;
+
+
+repeated_sequence
+    = "{", layout, definitions_list, layout, "}" ;
+
+
+grouped_sequence
+    = "(", layout, definitions_list, layout, ")" ;
+
+
+empty_sequence
+    = (* intentionally empty; denotes the empty string ε *) ;
+
+
+(* ---------- Terminals, identifiers, integers ---------- *)
+
+terminal_string
+    = "'", { terminal_char_no_squote }, "'"
+    | '"', { terminal_char_no_dquote }, '"' ;
+
+
+special_sequence
+    = "?", { special_char_no_qmark }, "?" ;
+
+
+meta_identifier
+    = identifier_start, { identifier_continue } ;
+
+
+identifier_start
+    = letter
+    | "_" ;
+
+
+identifier_continue
+    = letter
+    | digit
+    | "_"
+    | "-" ;
+
+
+integer
+    = digit, { digit } ;
+
+
+(* ---------- Layout: whitespace + comments ---------- *)
+
+layout
+    = { space | horizontal_tab | line_ending | comment } ;
+
+
+space
+    = " " ;
+
+
+horizontal_tab
+    = "\t" ;
+
+
+line_ending
+    = "\r\n"
+    | "\n"
+    | "\r" ;
+
+
+comment
+    = block_comment
+    | line_comment ;
+
+
+block_comment
+    = "(*", { block_comment_char }, "*)" ;
+
+block_comment_char
+    = ? any character except the sequence "*)" ? ;
+
+
+line_comment
+    = "//", { line_comment_char }, line_ending ;
+
+line_comment_char
+    = ? any character except line_ending ? ;
+
+
+(* ---------- Character classes (described explicitly) ---------- *)
+
+letter
+    = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
+    | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T"
+    | "U" | "V" | "W" | "X" | "Y" | "Z"
+    | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+    | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
+    | "u" | "v" | "w" | "x" | "y" | "z" ;
+
+
+digit
+    = "0" | "1" | "2" | "3" | "4" | "5"
+    | "6" | "7" | "8" | "9" ;
+
+
+terminal_char_no_squote
+    = ? any character except "'" and line_ending ? ;
+
+
+terminal_char_no_dquote
+    = ? any character except '"' and line_ending ? ;
+
+
+special_char_no_qmark
+    = ? any character except "?" and line_ending ? ;
