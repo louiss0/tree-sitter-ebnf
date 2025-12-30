@@ -1,26 +1,36 @@
 (*
-    Extended EBNF for describing EBNF with:
+    Extended Backus–Naur Form Specification
 
-      • Normal EBNF constructs (ISO-ish)
-      • Optional Markdown-style headings as top-level items
-      • Block and line comments as layout
+    This grammar describes the syntax of an EBNF grammar file.
 
-    This grammar describes the syntax of an EBNF file, not the language
-    that EBNF itself specifies.
+    Supports:
+      - Positive grammar rules using = or ::=
+      - Rule terminators ; or .
+      - Alternation using | and /
+      - Concatenation using ,
+      - Optionality using [ ... ]
+      - Repetition using { ... }
+      - Grouping using ( ... )
+      - Exception using "-"
+      - Counted repetition: integer * primary
+      - Terminal strings using "..." or '...'
+      - Special sequences using ? ... ?
+      - Markdown-style headings as documentation-only syntax
+      - Comments: (* ... *) and // ...
+
 *)
-
 grammar
     = { layout, top_level_item, layout } ;
 
 
-(* ---------- Top-level items ---------- *)
+(* ---------- Top-Level Structure ---------- *)
 
 top_level_item
     = heading
     | syntax_rule ;
 
 
-(* ---------- Markdown-style headings (optional) ---------- *)
+(* ---------- Headings (non-semantic) ---------- *)
 
 heading
     = heading_marks, space, heading_text, line_ending ;
@@ -40,7 +50,7 @@ heading_char
     = ? any character except line_ending ? ;
 
 
-(* ---------- EBNF rules ---------- *)
+(* ---------- Grammar Rules ---------- *)
 
 syntax_rule
     = meta_identifier, layout, defining_symbol, layout,
@@ -57,6 +67,8 @@ terminator_symbol
     | "." ;
 
 
+(* ---------- Alternatives & Sequences ---------- *)
+
 definitions_list
     = single_definition,
       { layout, definition_separator, layout, single_definition } ;
@@ -72,6 +84,8 @@ single_definition
       { layout, ",", layout, syntactic_term } ;
 
 
+(* ---------- Exception Support ---------- *)
+
 syntactic_term
     = syntactic_factor,
       [ layout, "-", layout, syntactic_exception ] ;
@@ -80,6 +94,8 @@ syntactic_term
 syntactic_exception
     = syntactic_factor ;
 
+
+(* ---------- Factors & Primaries ---------- *)
 
 syntactic_factor
     = [ integer, layout, "*", layout ], syntactic_primary ;
@@ -95,6 +111,8 @@ syntactic_primary
     | empty_sequence ;
 
 
+(* ---------- Structural Constructs ---------- *)
+
 optional_sequence
     = "[", layout, definitions_list, layout, "]" ;
 
@@ -108,10 +126,10 @@ grouped_sequence
 
 
 empty_sequence
-    = (* intentionally empty; denotes the empty string ε *) ;
+    = (* intentionally empty, represents ε *) ;
 
 
-(* ---------- Terminals, identifiers, integers ---------- *)
+(* ---------- Terminals & Specials ---------- *)
 
 terminal_string
     = "'", { terminal_char_no_squote }, "'"
@@ -121,6 +139,8 @@ terminal_string
 special_sequence
     = "?", { special_char_no_qmark }, "?" ;
 
+
+(* ---------- Identifiers & Numbers ---------- *)
 
 meta_identifier
     = identifier_start, { identifier_continue } ;
@@ -142,7 +162,7 @@ integer
     = digit, { digit } ;
 
 
-(* ---------- Layout: whitespace + comments ---------- *)
+(* ---------- Layout & Comments ---------- *)
 
 layout
     = { space | horizontal_tab | line_ending | comment } ;
@@ -181,7 +201,7 @@ line_comment_char
     = ? any character except line_ending ? ;
 
 
-(* ---------- Character classes (described explicitly) ---------- *)
+(* ---------- Character Classes ---------- *)
 
 letter
     = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
