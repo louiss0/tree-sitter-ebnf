@@ -2,9 +2,34 @@
 
 syntax =
     { { gap-separator | comment } } ,
+    [ markdown-heading1 , { gap-separator | comment } ] ,
+    { markdown-heading , { gap-separator | comment } } ,
     syntax-rule ,
-    { { gap-separator | comment } , syntax-rule } ,
+    { { gap-separator | comment } , ( markdown-heading | syntax-rule ) } ,
     { { gap-separator | comment } } ;
+
+
+## Markdown headings
+
+markdown-heading1 =
+    "#" , heading-text ;
+
+markdown-heading =
+      "##" , heading-text
+    | "###" , heading-text
+    | "####" , heading-text
+    | "#####" , heading-text
+    | "######" , heading-text ;
+
+heading-text =
+    heading-text-character ,
+    { heading-character } ;
+
+heading-text-character =
+    heading-character - "#" ;
+
+heading-character =
+    terminal-character - line-terminator ;
 
 
 ## Rules: definitions and alternatives
@@ -71,8 +96,7 @@ syntactic-primary =
     | character-range
     | meta-identifier
     | terminal-string
-    | special-sequence
-    | empty-sequence ;
+    | special-sequence ;
 
 
 ## Grouping: blocks and options
@@ -99,10 +123,6 @@ grouped-sequence =
     definitions-list ,
     { gap-separator | comment } ,
     end-group-symbol ;
-
-
-empty-sequence =
-    (* empty sequence of terminal-characters *) ;
 
 
 start-option-symbol  = "[" ;
