@@ -1,8 +1,9 @@
-==================
-Alternatives and separators
-==================
-identifier ::= "a" | "b" / "c" ;
+===
+Defining equals
+===
+rule = "a" ;
 ---
+
 (source_file
   (syntax_rule
     (meta_identifier)
@@ -12,8 +13,74 @@ identifier ::= "a" | "b" / "c" ;
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (terminal_string)))))
-      (definition_separator)
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Defining colon equals
+===
+rule ::= "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Terminator semicolon
+===
+semi = "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Terminator dot
+===
+dot = "a" .
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Definition separator pipe
+===
+rule = "a" | "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
       (single_definition
         (syntactic_term
           (syntactic_factor
@@ -27,11 +94,12 @@ identifier ::= "a" | "b" / "c" ;
               (terminal_string))))))
     (terminator_symbol)))
 
-==================
-Comma-separated terms
-==================
-pair = first, second, third ;
+===
+Definition separator slash
+===
+rule = "a" / "b" ;
 ---
+
 (source_file
   (syntax_rule
     (meta_identifier)
@@ -41,13 +109,98 @@ pair = first, second, third ;
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (meta_identifier))))
+              (terminal_string)))))
+      (definition_separator)
+      (single_definition
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (meta_identifier))))
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Concatenate comma
+===
+rule = "a", "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (meta_identifier))))))
+              (terminal_string))))
+        (concatenate_symbol)
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Repetition star
+===
+rule = 2 * "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (integer)
+            (repetition_symbol)
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Except dash
+===
+rule = "a" - "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))
+          (except_symbol)
+          (syntactic_exception
+            (syntactic_factor
+              (syntactic_primary
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Range operator
+===
+rule = "a" … "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (range_operator)
+                (terminal_string)))))))
     (terminator_symbol)))

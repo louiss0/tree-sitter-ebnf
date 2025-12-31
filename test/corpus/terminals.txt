@@ -1,8 +1,191 @@
-==================
-Terminal strings and specials
-==================
-terminals = 'single', "double", ?special? ;
+===
+Single-quoted terminal
+===
+rule = 'a' ;
 ---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Double-quoted terminal
+===
+rule = "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Special sequence text
+===
+rule = ?special? ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (special_sequence))))))
+    (terminator_symbol)))
+
+===
+Empty special sequence
+===
+rule = ?? ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (special_sequence))))))
+    (terminator_symbol)))
+
+===
+Terminal with space
+===
+rule = "a b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Terminal with digits
+===
+rule = "123" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Character range
+===
+rule = "a" … "z" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (range_operator)
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Multiple ranges
+===
+rule = "a" … "z" | "0" … "9" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (range_operator)
+                (terminal_string))))))
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (range_operator)
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Terminal concatenation comma
+===
+rule = "a", "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))
+        (concatenate_symbol)
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Terminal concatenation adjacency
+===
+rule = "a" "b" ;
+---
+
 (source_file
   (syntax_rule
     (meta_identifier)
@@ -16,18 +199,87 @@ terminals = 'single', "double", ?special? ;
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (terminal_string))))
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Terminal in optional
+===
+rule = [ "a" ] ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (special_sequence))))))
+              (optional_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
     (terminator_symbol)))
 
-==================
-Repetition and exception
-==================
-repeat = 3 * "a" - "b" ;
+===
+Terminal in repeated
+===
+rule = { "a" } ;
 ---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (repeated_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Terminal in grouped
+===
+rule = ( "a" ) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Repetition with terminal
+===
+rule = 3 * "a" ;
+---
+
 (source_file
   (syntax_rule
     (meta_identifier)
@@ -37,8 +289,28 @@ repeat = 3 * "a" - "b" ;
         (syntactic_term
           (syntactic_factor
             (integer)
+            (repetition_symbol)
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Exception with terminal
+===
+rule = "a" - "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
             (syntactic_primary
               (terminal_string)))
+          (except_symbol)
           (syntactic_exception
             (syntactic_factor
               (syntactic_primary

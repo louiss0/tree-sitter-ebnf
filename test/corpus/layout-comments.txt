@@ -1,9 +1,10 @@
-==================
-Layout and comments
-==================
-(* block comment *)
-rule = "a" ; // line comment
+===
+Comment before identifier
+===
+(* c *)
+rule = "a" ;
 ---
+
 (source_file
   (comment)
   (syntax_rule
@@ -15,5 +16,581 @@ rule = "a" ; // line comment
           (syntactic_factor
             (syntactic_primary
               (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between identifier and defining
+===
+rule (* c *) = "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (comment)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between defining and definition
+===
+rule = (* c *) "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (comment)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between definition and terminator
+===
+rule = "a" (* c *) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (comment)
+    (terminator_symbol)))
+
+===
+Comment after terminator
+===
+rule = "a" ; (* c *)
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
     (terminator_symbol))
   (comment))
+
+===
+Comment between alternatives
+===
+rule = "a" (* c *) | "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (comment)
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment before alternative term
+===
+rule = "a" | (* c *) "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (definition_separator)
+      (comment)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between slash separator
+===
+rule = "a" / (* c *) "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (definition_separator)
+      (comment)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment around concatenation
+===
+rule = "a" , (* c *) "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))
+        (concatenate_symbol)
+        (comment)
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between adjacent terms
+===
+rule = "a" (* c *) "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))
+        (comment)
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between integer and star
+===
+rule = 3 (* c *) * "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (integer)
+            (comment)
+            (repetition_symbol)
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between star and primary
+===
+rule = 3 * (* c *) "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (integer)
+            (repetition_symbol)
+            (comment)
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment around except symbol
+===
+rule = "a" (* c *) - "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))
+          (comment)
+          (except_symbol)
+          (syntactic_exception
+            (syntactic_factor
+              (syntactic_primary
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Comment after except symbol
+===
+rule = "a" - (* c *) "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))
+          (except_symbol)
+          (comment)
+          (syntactic_exception
+            (syntactic_factor
+              (syntactic_primary
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Comment inside optional sequence
+===
+rule = [ (* c *) "a" ] ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (optional_sequence
+                (comment)
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Comment around optional brackets
+===
+rule = (* c1 *) [ "a" ] (* c2 *) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (comment)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (optional_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (comment)
+    (terminator_symbol)))
+
+===
+Comment inside repeated sequence
+===
+rule = { (* c *) "a" } ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (repeated_sequence
+                (comment)
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Comment inside grouped sequence
+===
+rule = ( (* c *) "a" ) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (comment)
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Comment around range operator
+===
+rule = "a" (* c1 *) … (* c2 *) "z" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (comment)
+                (range_operator)
+                (comment)
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Comment between range and separator
+===
+rule = "a" … "z" (* c *) | "0" … "9" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (range_operator)
+                (terminal_string))))))
+      (comment)
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (character_range
+                (terminal_string)
+                (range_operator)
+                (terminal_string)))))))
+    (terminator_symbol)))
+
+===
+Comment with defining symbol variant
+===
+rule (* c *) ::= "a" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (comment)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment around terminator dot
+===
+rule = "a" (* c *) .
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (comment)
+    (terminator_symbol)))
+
+===
+Comment between rules
+===
+one = "a" ; (* c *) two = "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (comment)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Comment between grouped list terms
+===
+rule = ( "a" (* c *) , "b" ) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))
+                    (comment)
+                    (concatenate_symbol)
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Comment around definition separator term
+===
+rule = ("a") (* c *) / ("b") ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string)))))))))))
+      (comment)
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))

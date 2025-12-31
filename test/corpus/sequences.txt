@@ -1,8 +1,75 @@
-==================
-Optional, repeated, grouped
-==================
-sequence = [ "a" ], { "b" }, ( "c" ) ;
+===
+Single definition list
+===
+rule = "a" ;
 ---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Pipe definition list
+===
+rule = "a" | "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Slash definition list
+===
+rule = "a" / "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string)))))
+      (definition_separator)
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Optional sequence list
+===
+rule = [ "a" ] ;
+---
+
 (source_file
   (syntax_rule
     (meta_identifier)
@@ -18,7 +85,21 @@ sequence = [ "a" ], { "b" }, ( "c" ) ;
                     (syntactic_term
                       (syntactic_factor
                         (syntactic_primary
-                          (terminal_string))))))))))
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Repeated sequence list
+===
+rule = { "a" } ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
@@ -28,7 +109,21 @@ sequence = [ "a" ], { "b" }, ( "c" ) ;
                     (syntactic_term
                       (syntactic_factor
                         (syntactic_primary
-                          (terminal_string))))))))))
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Grouped sequence list
+===
+rule = ( "a" ) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
@@ -41,11 +136,12 @@ sequence = [ "a" ], { "b" }, ( "c" ) ;
                           (terminal_string))))))))))))
     (terminator_symbol)))
 
-==================
-Empty sequence
-==================
-empty = ;
+===
+Optional with alternatives
+===
+rule = [ "a" | "b" ] ;
 ---
+
 (source_file
   (syntax_rule
     (meta_identifier)
@@ -55,5 +151,116 @@ empty = ;
         (syntactic_term
           (syntactic_factor
             (syntactic_primary
-              (empty_sequence))))))
+              (optional_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string)))))
+                  (definition_separator)
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Repeated with concatenation
+===
+rule = { "a" , "b" } ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (repeated_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))
+                    (concatenate_symbol)
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Grouped with adjacency
+===
+rule = ( "a" "b" ) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (terminal_string))))))))))))
+    (terminator_symbol)))
+
+===
+Nested lists
+===
+rule = ( [ "a" ] | { "b" } ) ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (grouped_sequence
+                (definitions_list
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (optional_sequence
+                            (definitions_list
+                              (single_definition
+                                (syntactic_term
+                                  (syntactic_factor
+                                    (syntactic_primary
+                                      (terminal_string)))))))))))
+                  (definition_separator)
+                  (single_definition
+                    (syntactic_term
+                      (syntactic_factor
+                        (syntactic_primary
+                          (repeated_sequence
+                            (definitions_list
+                              (single_definition
+                                (syntactic_term
+                                  (syntactic_factor
+                                    (syntactic_primary
+                                      (terminal_string))))))))))))))))))
     (terminator_symbol)))

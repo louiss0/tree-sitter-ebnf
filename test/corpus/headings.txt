@@ -1,13 +1,12 @@
-==================
-Heading with rule
-==================
-# Grammar Overview
+===
+Heading level 1 at top
+===
+# Top heading
 rule = "a" ;
 ---
+
 (source_file
-  (heading
-    (heading_marks)
-    (heading_text))
+  (markdown_heading1)
   (syntax_rule
     (meta_identifier)
     (defining_symbol)
@@ -18,3 +17,240 @@ rule = "a" ;
             (syntactic_primary
               (terminal_string))))))
     (terminator_symbol)))
+
+===
+Heading level 2 between rules
+===
+one = "a" ;
+## Section two
+two = "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Heading level 3 between rules
+===
+one = "a" ;
+### Section three
+two = "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Heading level 4 between rules
+===
+one = "a" ;
+#### Section four
+two = "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Heading level 5 between rules
+===
+one = "a" ;
+##### Section five
+two = "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Heading level 6 between rules
+===
+one = "a" ;
+###### Section six
+two = "b" ;
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Multiple headings before rule
+===
+## Part 1
+### Part 2
+rule = "a" ;
+---
+
+(source_file
+  (markdown_heading)
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Heading after rule
+===
+rule = "a" ;
+## Footer
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading))
+
+===
+Heading with punctuation
+===
+## Section: Terms & Factors
+term = "a" ;
+---
+
+(source_file
+  (markdown_heading)
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol)))
+
+===
+Heading at end of file
+===
+rule = "a" ;
+### End
+---
+
+(source_file
+  (syntax_rule
+    (meta_identifier)
+    (defining_symbol)
+    (definitions_list
+      (single_definition
+        (syntactic_term
+          (syntactic_factor
+            (syntactic_primary
+              (terminal_string))))))
+    (terminator_symbol))
+  (markdown_heading))
