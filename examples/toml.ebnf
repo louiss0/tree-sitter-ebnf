@@ -1,0 +1,69 @@
+# TOML
+
+(* TOML grammar in EBNF *)
+
+## Document
+
+toml = { statement } ;
+
+## Statements
+
+statement =
+    key_value
+  | table
+  | table_array
+  | comment ;
+
+## Key-Value
+
+key_value = key , "=" , value ;
+
+## Keys
+
+key = simple_key | dotted_key ;
+simple_key = bare_key | quoted_key ;
+quoted_key = basic_string | literal_string ;
+dotted_key = simple_key , { "." , simple_key } ;
+
+bare_key = bare_char , { bare_char } ;
+bare_char = letter | digit | "_" | "-" ;
+
+## Values
+
+value =
+    string
+  | integer
+  | float
+  | boolean
+  | array
+  | inline_table ;
+
+boolean = "true" | "false" ;
+
+integer = [ "-" | "+" ] , digits ;
+float = integer , "." , digits ;
+
+string = basic_string | literal_string ;
+basic_string = '"' , basic_char , { basic_char } , '"' ;
+literal_string = "'" , literal_char , { literal_char } , "'" ;
+basic_char = ? any Unicode character except quotation-mark or control ? ;
+literal_char = ? any Unicode character except apostrophe or control ? ;
+
+## Collections
+
+array = "[" , [ value , { "," , value } ] , "]" ;
+inline_table = "{" , [ key_value , { "," , key_value } ] , "}" ;
+
+## Tables
+
+table = "[" , key , "]" ;
+table_array = "[[" , key , "]]" ;
+
+## Comments
+
+comment = "#" , { comment_char } ;
+comment_char = ? any character except newline ? ;
+
+digits = digit , { digit } ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+letter = ? A-Z or a-z ? ;

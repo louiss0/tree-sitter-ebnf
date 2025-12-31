@@ -1,0 +1,192 @@
+
+<!doctype HTML>
+<head>
+  <title>Tree-sitter Highlighting</title>
+  <style>
+    body {
+      font-family: monospace
+    }
+    .line-number {
+      user-select: none;
+      text-align: right;
+      color: rgba(27,31,35,.3);
+      padding: 0 10px;
+    }
+    .line {
+      white-space: pre;
+    }
+  </style>
+  <style>
+    .attribute { font-style: italic;color: #af0000; }
+    .comment { font-style: italic;color: #8a8a8a; }
+    .constant { color: #875f00; }
+    .constant.builtin { font-weight: bold;color: #875f00; }
+    .constructor { color: #af8700; }
+    .function { color: #005fd7; }
+    .function.builtin { font-weight: bold;color: #005fd7; }
+    .keyword { color: #5f00d7; }
+    .module { color: #af8700; }
+    .number { font-weight: bold;color: #875f00; }
+    .operator { font-weight: bold;color: #4e4e4e; }
+    .property { color: #af0000; }
+    .property.builtin { font-weight: bold;color: #af0000; }
+    .punctuation { color: #4e4e4e; }
+    .punctuation.bracket { color: #4e4e4e; }
+    .punctuation.delimiter { color: #4e4e4e; }
+    .punctuation.special { color: #4e4e4e; }
+    .string { color: #008700; }
+    .string.special { color: #008787; }
+    .tag { color: #000087; }
+    .type { color: #005f5f; }
+    .type.builtin { font-weight: bold;color: #005f5f; }
+    .variable { color: #d0d0d0; }
+    .variable.builtin { font-weight: bold;color: #d0d0d0; }
+    .variable.parameter { text-decoration: underline;color: #d0d0d0; }
+  </style>
+
+</head>
+<body>
+
+<table>
+<tr><td class=line-number>1</td><td class=line><span style='color: #000087'># TOML</span>
+</td></tr>
+<tr><td class=line-number>2</td><td class=line>
+</td></tr>
+<tr><td class=line-number>3</td><td class=line><span style='font-style: italic;color: #8a8a8a'>(* TOML grammar in EBNF *)</span>
+</td></tr>
+<tr><td class=line-number>4</td><td class=line>
+</td></tr>
+<tr><td class=line-number>5</td><td class=line><span style='color: #000087'>## Document</span>
+</td></tr>
+<tr><td class=line-number>6</td><td class=line>
+</td></tr>
+<tr><td class=line-number>7</td><td class=line><span style='color: #d0d0d0'>toml</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #4e4e4e'>{</span> <span style='color: #d0d0d0'>statement</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>8</td><td class=line>
+</td></tr>
+<tr><td class=line-number>9</td><td class=line><span style='color: #000087'>## Statements</span>
+</td></tr>
+<tr><td class=line-number>10</td><td class=line>
+</td></tr>
+<tr><td class=line-number>11</td><td class=line><span style='color: #d0d0d0'>statement</span> <span style='font-weight: bold;color: #4e4e4e'>=</span>
+</td></tr>
+<tr><td class=line-number>12</td><td class=line>    <span style='color: #d0d0d0'>key_value</span>
+</td></tr>
+<tr><td class=line-number>13</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>table</span>
+</td></tr>
+<tr><td class=line-number>14</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>table_array</span>
+</td></tr>
+<tr><td class=line-number>15</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>comment</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>16</td><td class=line>
+</td></tr>
+<tr><td class=line-number>17</td><td class=line><span style='color: #000087'>## Key-Value</span>
+</td></tr>
+<tr><td class=line-number>18</td><td class=line>
+</td></tr>
+<tr><td class=line-number>19</td><td class=line><span style='color: #d0d0d0'>key_value</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>key</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;=&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>value</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>20</td><td class=line>
+</td></tr>
+<tr><td class=line-number>21</td><td class=line><span style='color: #000087'>## Keys</span>
+</td></tr>
+<tr><td class=line-number>22</td><td class=line>
+</td></tr>
+<tr><td class=line-number>23</td><td class=line><span style='color: #d0d0d0'>key</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>simple_key</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>dotted_key</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>24</td><td class=line><span style='color: #d0d0d0'>simple_key</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>bare_key</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>quoted_key</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>25</td><td class=line><span style='color: #d0d0d0'>quoted_key</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>basic_string</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>literal_string</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>26</td><td class=line><span style='color: #d0d0d0'>dotted_key</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>simple_key</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #008700'>&quot;.&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>simple_key</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>27</td><td class=line>
+</td></tr>
+<tr><td class=line-number>28</td><td class=line><span style='color: #d0d0d0'>bare_key</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>bare_char</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #d0d0d0'>bare_char</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>29</td><td class=line><span style='color: #d0d0d0'>bare_char</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>letter</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>digit</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;_&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;-&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>30</td><td class=line>
+</td></tr>
+<tr><td class=line-number>31</td><td class=line><span style='color: #000087'>## Values</span>
+</td></tr>
+<tr><td class=line-number>32</td><td class=line>
+</td></tr>
+<tr><td class=line-number>33</td><td class=line><span style='color: #d0d0d0'>value</span> <span style='font-weight: bold;color: #4e4e4e'>=</span>
+</td></tr>
+<tr><td class=line-number>34</td><td class=line>    <span style='color: #d0d0d0'>string</span>
+</td></tr>
+<tr><td class=line-number>35</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>integer</span>
+</td></tr>
+<tr><td class=line-number>36</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>float</span>
+</td></tr>
+<tr><td class=line-number>37</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>boolean</span>
+</td></tr>
+<tr><td class=line-number>38</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>array</span>
+</td></tr>
+<tr><td class=line-number>39</td><td class=line>  <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>inline_table</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>40</td><td class=line>
+</td></tr>
+<tr><td class=line-number>41</td><td class=line><span style='color: #d0d0d0'>boolean</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;true&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;false&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>42</td><td class=line>
+</td></tr>
+<tr><td class=line-number>43</td><td class=line><span style='color: #d0d0d0'>integer</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #4e4e4e'>[</span> <span style='color: #008700'>&quot;-&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;+&quot;</span> <span style='color: #4e4e4e'>]</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>digits</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>44</td><td class=line><span style='color: #d0d0d0'>float</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>integer</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;.&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>digits</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>45</td><td class=line>
+</td></tr>
+<tr><td class=line-number>46</td><td class=line><span style='color: #d0d0d0'>string</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>basic_string</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #d0d0d0'>literal_string</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>47</td><td class=line><span style='color: #d0d0d0'>basic_string</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&#39;&quot;&#39;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>basic_char</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #d0d0d0'>basic_char</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&#39;&quot;&#39;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>48</td><td class=line><span style='color: #d0d0d0'>literal_string</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;&#39;&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>literal_char</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #d0d0d0'>literal_char</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;&#39;&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>49</td><td class=line><span style='color: #d0d0d0'>basic_char</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008787'>? any Unicode character except quotation-mark or control ?</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>50</td><td class=line><span style='color: #d0d0d0'>literal_char</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008787'>? any Unicode character except apostrophe or control ?</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>51</td><td class=line>
+</td></tr>
+<tr><td class=line-number>52</td><td class=line><span style='color: #000087'>## Collections</span>
+</td></tr>
+<tr><td class=line-number>53</td><td class=line>
+</td></tr>
+<tr><td class=line-number>54</td><td class=line><span style='color: #d0d0d0'>array</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;[&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>[</span> <span style='color: #d0d0d0'>value</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #008700'>&quot;,&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>value</span> <span style='color: #4e4e4e'>}</span> <span style='color: #4e4e4e'>]</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;]&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>55</td><td class=line><span style='color: #d0d0d0'>inline_table</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;{&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>[</span> <span style='color: #d0d0d0'>key_value</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #008700'>&quot;,&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>key_value</span> <span style='color: #4e4e4e'>}</span> <span style='color: #4e4e4e'>]</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;}&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>56</td><td class=line>
+</td></tr>
+<tr><td class=line-number>57</td><td class=line><span style='color: #000087'>## Tables</span>
+</td></tr>
+<tr><td class=line-number>58</td><td class=line>
+</td></tr>
+<tr><td class=line-number>59</td><td class=line><span style='color: #d0d0d0'>table</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;[&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>key</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;]&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>60</td><td class=line><span style='color: #d0d0d0'>table_array</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;[[&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #d0d0d0'>key</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #008700'>&quot;]]&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>61</td><td class=line>
+</td></tr>
+<tr><td class=line-number>62</td><td class=line><span style='color: #000087'>## Comments</span>
+</td></tr>
+<tr><td class=line-number>63</td><td class=line>
+</td></tr>
+<tr><td class=line-number>64</td><td class=line><span style='color: #d0d0d0'>comment</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;#&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #d0d0d0'>comment_char</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>65</td><td class=line><span style='color: #d0d0d0'>comment_char</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008787'>? any character except newline ?</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>66</td><td class=line>
+</td></tr>
+<tr><td class=line-number>67</td><td class=line><span style='color: #d0d0d0'>digits</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #d0d0d0'>digit</span> <span style='font-weight: bold;color: #4e4e4e'>,</span> <span style='color: #4e4e4e'>{</span> <span style='color: #d0d0d0'>digit</span> <span style='color: #4e4e4e'>}</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>68</td><td class=line><span style='color: #d0d0d0'>digit</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008700'>&quot;0&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;1&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;2&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;3&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;4&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;5&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;6&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;7&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;8&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>|</span> <span style='color: #008700'>&quot;9&quot;</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+<tr><td class=line-number>69</td><td class=line><span style='color: #d0d0d0'>letter</span> <span style='font-weight: bold;color: #4e4e4e'>=</span> <span style='color: #008787'>? A-Z or a-z ?</span> <span style='font-weight: bold;color: #4e4e4e'>;</span>
+</td></tr>
+</table>
+
+</body>
+

@@ -1,0 +1,40 @@
+# JSON
+
+(* JSON grammar in EBNF *)
+
+json = value ;
+
+## Values
+
+value =
+    object
+  | array
+  | string
+  | number
+  | "true"
+  | "false"
+  | "null" ;
+
+## Objects
+
+object = "{" , [ member , { "," , member } ] , "}" ;
+member = string , ":" , value ;
+
+## Arrays
+
+array = "[" , [ value , { "," , value } ] , "]" ;
+
+## Strings
+
+string = quote , { character } , quote ;
+quote = '"' ;
+character = ? any Unicode character except quote or control ? ;
+
+## Numbers
+
+number = integer , [ fraction ] , [ exponent ] ;
+integer = [ "-" ] , digits ;
+digits = digit , { digit } ;
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+fraction = "." , digits ;
+exponent = ( "e" | "E" ) , [ "+" | "-" ] , digits ;
